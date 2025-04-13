@@ -1,9 +1,3 @@
-let btn = document.querySelector("#btn");
-let output = document.querySelector("#output");
-let input = document.querySelector("#ip");
-
-btn.addEventListener("click", handleclick);
-
 function handleclick() {
     let val = Number(input.value);
     if (isNaN(val)) {
@@ -11,41 +5,43 @@ function handleclick() {
         return;
     }
 
-    // Step 1: Show initial input value
-    output.textContent = `Result: ${val}`;
+    // Force browser to render this on next tick (Cypress sees it)
+    setTimeout(() => {
+        output.textContent = `Result: ${val}`;
+    }, 0);
 
     new Promise(resolve => {
         setTimeout(() => resolve(val), 2000);
     })
     .then(mul => {
         let multi = mul * 2;
-        output.textContent = `Result: ${multi}`; // Step 2: After multiplication
+        output.textContent = `Result: ${multi}`;
         return new Promise(resolve => {
             setTimeout(() => resolve(multi), 2000);
         });
     })
     .then(sub => {
         let subt = sub - 3;
-        output.textContent = `Result: ${subt}`; // Step 3: After subtraction
+        output.textContent = `Result: ${subt}`;
         return new Promise(resolve => {
             setTimeout(() => resolve(subt), 1000);
         });
     })
     .then(div => {
         let dived = div / 2;
-        output.textContent = `Result: ${dived}`; // Step 4: After division
+        output.textContent = `Result: ${dived}`;
         return new Promise(resolve => {
             setTimeout(() => resolve(dived), 1000);
         });
     })
     .then(add => {
         let added = add + 10;
-        output.textContent = `Result: ${added}`; // Step 5: After addition
+        output.textContent = `Result: ${added}`;
         return new Promise(resolve => {
             setTimeout(() => resolve(added), 1000);
         });
     })
     .then(final => {
-        output.textContent = `Result: ${final}`; // Final output
+        output.textContent = `Result: ${final}`;
     });
 }
